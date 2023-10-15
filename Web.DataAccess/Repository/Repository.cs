@@ -12,6 +12,8 @@ namespace Web.DataAccess.Repository
         public Repository(ApplicationDbContext context)
         {
             _context = context;
+            //FoodType, Category
+            //_context.MenuItem.Include(c => c.Category).Include(f => f.FoodType);
             this._dbSet = context.Set<T>();
         }
 
@@ -20,9 +22,16 @@ namespace Web.DataAccess.Repository
             _dbSet.Add(entity);
         }
 
-        public IEnumerable<T> GetAll()
+        public IEnumerable<T> GetAll(string? includeProperties = null)
         {
             IQueryable<T> query = _dbSet;
+            if (includeProperties != null)
+            {
+                foreach (var includeProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(includeProperty);
+                }
+            }
             return query.ToList();
         }
 
