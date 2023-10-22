@@ -1,9 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Web.Models;
 
 namespace Web.DataAccesss.Data
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext
     {
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
@@ -15,5 +16,9 @@ namespace Web.DataAccesss.Data
         public DbSet<FoodType> FoodType { get; set; }
 
         public DbSet<MenuItem> MenuItem { get; set; }
+
+        public DbSet<ApplicationUser> ApplicationUser { get; set; }
+
+        public DbSet<ShoppingCart> ShoppingCart { get; set; }
     }
 }

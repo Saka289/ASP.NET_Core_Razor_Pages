@@ -2,6 +2,9 @@ using Microsoft.EntityFrameworkCore;
 using Web.DataAccess.Repository;
 using Web.DataAccess.Repository.IRepository;
 using Web.DataAccesss.Data;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using Web.Utility;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,8 +14,17 @@ builder.Services.AddRazorPages();
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer
 (builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+    .AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
 
+builder.Services.AddSingleton<IEmailSender, EmailSender>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/Identity/Account/Login";
+    options.LogoutPath = "/Identity/Account/Logout";
+    options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -27,6 +39,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseAuthentication(); ;
 
 app.UseAuthorization();
 

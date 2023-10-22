@@ -14,6 +14,8 @@ namespace Web.DataAccess.Repository.IRepository
 
         IMenuItemRepository MenuItem { get; }
 
+        IShoppingCartRepository ShoppingCart { get; }
+
         void Save();
     }
 }
