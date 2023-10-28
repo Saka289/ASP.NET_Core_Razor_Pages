@@ -18,9 +18,18 @@ namespace Web.DataAccess.Repository
             _context = context;
         }
 
-        public void Udpate(ShoppingCart obj)
+        public int DecrementCount(ShoppingCart shoppingCart, int count)
         {
-            throw new NotImplementedException();
+            shoppingCart.Count -= count;
+            _context.SaveChanges();
+            return shoppingCart.Count;
+        }
+
+        public int IncrementCount(ShoppingCart shoppingCart, int count)
+        {
+            shoppingCart.Count += count;
+            _context.SaveChanges();
+            return shoppingCart.Count;
         }
     }
 }

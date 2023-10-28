@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Web.DataAccess", "Web.DataA
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Web.Models", "Web.Models\Web.Models.csproj", "{AD2A3893-10C9-488B-90B3-D9907FB48655}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web.Utility", "Web.Utility\Web.Utility.csproj", "{913E1FED-D75B-4E91-92E7-64E349B63192}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Web.Utility", "Web.Utility\Web.Utility.csproj", "{913E1FED-D75B-4E91-92E7-64E349B63192}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
