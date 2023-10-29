@@ -6,16 +6,22 @@ using System.Threading.Tasks;
 
 namespace Web.DataAccess.Repository.IRepository
 {
-    public interface IUnitOfWork : IDisposable
-    {
-        ICategoryRepository Category { get; }
+	public interface IUnitOfWork : IDisposable
+	{
+		ICategoryRepository Category { get; }
 
-        IFoodtypeRepository FoodType { get; }
+		IFoodtypeRepository FoodType { get; }
 
-        IMenuItemRepository MenuItem { get; }
+		IMenuItemRepository MenuItem { get; }
 
-        IShoppingCartRepository ShoppingCart { get; }
+		IShoppingCartRepository ShoppingCart { get; }
 
-        void Save();
-    }
+		IOrderHeaderRepository OrderHeader { get; }
+
+		IOrderDetailsRepository OrderDetails { get; }
+
+		IApplicationUserRepository ApplicationUser { get; }
+
+		void Save();
+	}
 }
