@@ -1,6 +1,7 @@
 ﻿@page
 @model WebApp.Pages.Customer.Cart.SummaryModel
-
+@inject IOptions<Web.Utility.StripSetting> Stripe
+@using Microsoft.Extensions.Options
 
 <form method="post">
     <br />
@@ -89,7 +90,7 @@
                                     }
                                     <li class="list-group-item d-flex justify-content-between bg-light">
                                         <small class="text-info">Total (USD)</small>
-                                        <strong class="text-info">$@Model.OrderHeader.OrderTotal</strong>
+                                        <strong class="text-info">$@Model.OrderHeader.OrderTotal.ToString("0.00")</strong>
                                     </li>
                                 </ul>
                             </div>
@@ -110,6 +111,7 @@
 
 @section Scripts{
     @{
+        <script src="https://js.stripe.com/v3/"></script>
         <partial name="_ValidationScriptsPartial" />
     }
 }

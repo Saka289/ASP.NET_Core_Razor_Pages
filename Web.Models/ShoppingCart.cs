@@ -26,5 +26,10 @@ namespace Web.Models
         [ForeignKey("ApplicationUserId")]
         [ValidateNever]
         public ApplicationUser ApplicationUser { get; set; }
+
+        public ShoppingCart()
+        {
+            Count = 1;
+        }
     }
 }
