@@ -30,6 +30,7 @@ namespace WebApp.Pages.Customer.Cart
                 if (session.PaymentStatus.ToLower() == "paid")
                 {
                     orderHeader.Status = SD.StatusSubmitted;
+                    orderHeader.PaymentIntentId = session.PaymentIntentId;
                     _unitOfWork.Save();
                 }
             }

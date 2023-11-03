@@ -72,7 +72,6 @@ namespace WebApp.Pages.Customer.Cart
                     };
                     _unitOfWork.OrderDetails.Add(orderDetails);
                 }
-                //_unitOfWork.ShoppingCart.RemoveRange(ShoppingCartList);
                 _unitOfWork.Save();
 
                 var domain = "https://localhost:7052/";
@@ -110,7 +109,6 @@ namespace WebApp.Pages.Customer.Cart
                 Response.Headers.Add("Location", session.Url);
 
                 OrderHeader.SessionId = session.Id;
-                OrderHeader.PaymentIntentId = session.PaymentIntentId;
                 _unitOfWork.Save();
                 return new StatusCodeResult(303);
             }
