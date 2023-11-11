@@ -29,5 +29,7 @@ namespace Web.Utility
         public const string StatusCancelled = "Cancelled";
         //Trạng thái hoàn tiền
         public const string StatusRefunded = "Refunded";
+
+        public const string SessionCart = "SessionCart";
     }
 }

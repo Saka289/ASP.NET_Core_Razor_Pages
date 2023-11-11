@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
 using Web.DataAccess.Repository.IRepository;
 using Web.Models;
+using Web.Utility;
 
 namespace WebApp.Pages.Customer.Home
 {
@@ -44,6 +45,7 @@ namespace WebApp.Pages.Customer.Home
                 {
                     _unitOfWork.ShoppingCart.Add(ShoppingCart);
                     _unitOfWork.Save();
+                    HttpContext.Session.SetInt32(SD.SessionCart, _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == ShoppingCart.ApplicationUserId).ToList().Count);
                 }
                 else
                 {
