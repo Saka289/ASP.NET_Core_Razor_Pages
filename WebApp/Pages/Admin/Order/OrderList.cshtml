@@ -1,12 +1,60 @@
 ﻿@page
 @model WebApp.Pages.Admin.Order.OrderListModel
 
+@{
+    var status = HttpContext.Request.Query["status"];
+    var cancelled = "text-primary";
+    var completed = "text-primary";
+    var inProcess = "text-primary";
+    var ready = "text-primary";
+
+    if (status == "cancelled")
+    {
+        cancelled = "active text-white";
+    }
+    else
+    {
+        if (status == "completed")
+        {
+            completed = "active text-white";
+        }
+        else
+        {
+            if (status == "ready")
+            {
+                ready = "active text-white";
+            }
+            else
+            {
+                inProcess = "active text-white";
+            }
+        }
+    }
+
+}
+
+
 <div class="container p-3">
-    <div class="row pt-4">
-        <div class="col-6">
+    <div class="d-flex justify-content-between">
+        <div class="p-2">
             <h2 class="text-primary">Order List</h2>
         </div>
-        <div class="col-6 text-end"></div>
+        <div class="p-2">
+            <ul class="list-group list-group-horizontal-sm">
+                <a style="text-decoration:none;" asp-page="OrderList" asp-route-status="cancelled">
+                <li class="list-group-item @cancelled">Cancelled</li>
+                </a>
+                <a style="text-decoration:none;" asp-page="OrderList" asp-route-status="completed">
+                <li class="list-group-item @completed">Completed</li>
+                </a>
+                <a style="text-decoration:none;" asp-page="OrderList" asp-route-status="ready">
+                <li class="list-group-item @ready">Ready For PickUp</li>
+                </a>
+                <a style="text-decoration:none;" asp-page="OrderList" asp-route-status="inprocess">
+                <li class="list-group-item @inProcess">InProcess</li>
+                </a>
+            </ul>
+        </div>
     </div>
     <br /><br />
     <table id="myTable" class="table table-bordered table-striped" style="width:100%">
@@ -24,5 +72,5 @@
 </div>
 
 @section Scripts{
-    <script src="~/js/orderList.js"></script>
+    <script src="~/js/orderlist.js"></script>
 }
