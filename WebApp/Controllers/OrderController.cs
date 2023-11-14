@@ -19,7 +19,7 @@ namespace WebApp.Controllers
 
         [HttpGet]
         [Authorize]
-        public IActionResult Get(string? status=null)
+        public IActionResult Get(string? status = null)
         {
             var OrderHeaderList = _unitOfWork.OrderHeader.GetAll(includeProperties: "ApplicationUser");
             if (status == "cancelled")
@@ -40,7 +40,14 @@ namespace WebApp.Controllers
                     }
                     else
                     {
-                        OrderHeaderList = OrderHeaderList.Where(u => u.Status == SD.StatusInProcess || u.Status == SD.StatusSubmitted);
+                        if (status == "inprocess")
+                        {
+                            OrderHeaderList = OrderHeaderList.Where(u => u.Status == SD.StatusInProcess || u.Status == SD.StatusSubmitted);
+                        }
+                        else
+                        {
+                            OrderHeaderList = OrderHeaderList.ToList();
+                        }
                     }
                 }
             }

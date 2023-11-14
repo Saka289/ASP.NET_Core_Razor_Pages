@@ -1,0 +1,89 @@
+﻿@page
+@model WebApp.Pages.Admin.Ingredient.IndexModel
+
+@{
+    var prevDisabled = !Model.IngredientsPaging.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.IngredientsPaging.HasNextPage ? "disabled" : "";
+}
+@{
+    int pagesToShow = 2; // Số lượng trang hiển thị
+    int startPage = Model.IngredientsPaging.PageIndex - pagesToShow;
+    int endPage = Model.IngredientsPaging.PageIndex + pagesToShow;
+
+    if (startPage < 1)
+    {
+        startPage = 1;
+        endPage = Math.Min(Model.IngredientsPaging.TotalPages, 2 * pagesToShow + 1);
+    }
+
+    if (endPage > Model.IngredientsPaging.TotalPages)
+    {
+        endPage = Model.IngredientsPaging.TotalPages;
+        startPage = Math.Max(1, Model.IngredientsPaging.TotalPages - 2 * pagesToShow);
+    }
+}
+
+
+<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-primary">Ingredient List</h2>
+        </div>
+        <div class="col-6 text-end">
+            <a asp-page="create" class="btn btn-primary">
+                <i class="bi bi-plus-square"></i> &nbsp;Create New Ingredient
+            </a>
+        </div>
+    </div>
+    <br /><br />
+    <table class="table table-bordered table-striped" style="width:100%">
+        <thead>
+            <tr>
+                <th>
+                    Ingredient name
+                </th>
+                <th>
+                    Price
+                </th>
+                <th>
+                    Quantity
+                </th>
+                <th>
+                    ImportDate
+                </th>
+                <th>
+                    ExpirationDate
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var obj in Model.Ingredients)
+            {
+                <tr>
+                    <td width="20%">@obj.Name</td>
+                    <td width="10%">@obj.Price</td>
+                    <td width="10%">@obj.Quantity</td>
+                    <td width="20%">@obj.ImportDate</td>
+                    <td width="20%">@obj.ExpirationDate</td>
+                    <td>
+                        <div class="w-80 btnbtn-group" role="group">
+                            <a asp-page="Edit" asp-route-id="@obj.Id" class="btn btn-primary mx-2">
+                                <i class="bi bi-pencil-square"></i>
+                            </a>
+                            <a asp-page="Delete" asp-route-id="@obj.Id" class="btn btn-danger mx-2">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <br /><br />
+    <a asp-page="./Index" asp-route-pageIndex="@(Model.IngredientsPaging.PageIndex - 1)" class="btn btn-primary @prevDisabled">Previous</a>
+    @for (int i = startPage; i <= endPage; i++)
+    {
+        <a asp-page="./Index" asp-route-pageIndex="@i" class="btn btn-primary @(i == Model.IngredientsPaging.PageIndex ? "activebtn" : "")">@i</a>
+    }
+    <a asp-page="./Index" asp-route-pageIndex="@(Model.IngredientsPaging.PageIndex + 1)" class="btn btn-primary @nextDisabled">Next</a>
+</div>

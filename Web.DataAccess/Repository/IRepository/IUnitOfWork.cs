@@ -22,6 +22,10 @@ namespace Web.DataAccess.Repository.IRepository
 
 		IApplicationUserRepository ApplicationUser { get; }
 
+		IIngredientRepository Ingredient { get; }
+
+		IMenuItemIngredientRepository MenuItemIngredient { get; }
+
 		void Save();
 	}
 }

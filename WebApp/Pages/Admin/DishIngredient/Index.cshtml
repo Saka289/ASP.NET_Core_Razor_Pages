@@ -1,0 +1,85 @@
+﻿@page
+@model WebApp.Pages.Admin.DishIngredient.IndexModel
+
+
+@{
+    var prevDisabled = !Model.MenuItemPaging.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.MenuItemPaging.HasNextPage ? "disabled" : "";
+}
+@{
+    int pagesToShow = 2; // Số lượng trang hiển thị
+    int startPage = Model.MenuItemPaging.PageIndex - pagesToShow;
+    int endPage = Model.MenuItemPaging.PageIndex + pagesToShow;
+
+    if (startPage < 1)
+    {
+        startPage = 1;
+        endPage = Math.Min(Model.MenuItemPaging.TotalPages, 2 * pagesToShow + 1);
+    }
+
+    if (endPage > Model.MenuItemPaging.TotalPages)
+    {
+        endPage = Model.MenuItemPaging.TotalPages;
+        startPage = Math.Max(1, Model.MenuItemPaging.TotalPages - 2 * pagesToShow);
+    }
+}
+
+
+<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-primary">DishIngredient List</h2>
+        </div>
+        <div class="col-6 text-end">
+            <a asp-page="create" class="btn btn-primary">
+                <i class="bi bi-plus-square"></i> &nbsp;Create New DishIngredient
+            </a>
+        </div>
+    </div>
+    <br /><br />
+    <table class="table table-bordered table-striped" style="width:100%">
+        <thead>
+            <tr>
+                <th>
+                    MenuItem Name
+                </th>
+                <th>
+                    Ingredient
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.MenuItemList)
+            {
+                <tr>
+                    <td width="30%">@item.Name</td>
+                    <td width="50%">
+                        @foreach (var itemMenu in Model.DishIngredientList.Where(i => i.MenuItemId == item.Id))
+                        {
+                            <text>@itemMenu.Ingredient.Name, </text>
+                        }
+                    </td>
+                    <td>
+                        <div class="w-80 btnbtn-group" role="group">
+                            <a asp-page="Edit" asp-route-id="@item.Id" class="btn btn-primary mx-2">
+                                <i class="bi bi-pencil-square"></i>
+                            </a>
+                            <a asp-page="Delete" asp-route-id="@item.Id" class="btn btn-danger mx-2">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <br /><br />
+    <a asp-page="./Index" asp-route-pageIndex="@(Model.MenuItemPaging.PageIndex - 1)" class="btn btn-primary @prevDisabled">Previous</a>
+    @for (int i = startPage; i <= endPage; i++)
+    {
+        <a asp-page="./Index" asp-route-pageIndex="@i" class="btn btn-primary @(i == Model.MenuItemPaging.PageIndex ? "activebtn" : "")">@i</a>
+    }
+    <a asp-page="./Index" asp-route-pageIndex="@(Model.MenuItemPaging.PageIndex + 1)" class="btn btn-primary @nextDisabled">Next</a>
+</div>
+
+

@@ -1,7 +1,28 @@
 ﻿@page
 @model WebApp.Pages.Admin.FoodTypes.IndexModel
 
-@* <partial name="_Notification"/> *@
+@{
+    var prevDisabled = !Model.FoodTypePaging.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.FoodTypePaging.HasNextPage ? "disabled" : "";
+}
+@{
+    int pagesToShow = 2; // Số lượng trang hiển thị
+    int startPage = Model.FoodTypePaging.PageIndex - pagesToShow;
+    int endPage = Model.FoodTypePaging.PageIndex + pagesToShow;
+
+    if (startPage < 1)
+    {
+        startPage = 1;
+        endPage = Math.Min(Model.FoodTypePaging.TotalPages, 2 * pagesToShow + 1);
+    }
+
+    if (endPage > Model.FoodTypePaging.TotalPages)
+    {
+        endPage = Model.FoodTypePaging.TotalPages;
+        startPage = Math.Max(1, Model.FoodTypePaging.TotalPages - 2 * pagesToShow);
+    }
+}
+
 
 <div class="container p-3">
     <div class="row pt-4">
@@ -42,4 +63,11 @@
             }
         </tbody>
     </table>
+    <br /><br />
+    <a asp-page="./Index" asp-route-pageIndex="@(Model.FoodTypePaging.PageIndex - 1)" class="btn btn-primary @prevDisabled">Previous</a>
+    @for (int i = startPage; i <= endPage; i++)
+    {
+        <a asp-page="./Index" asp-route-pageIndex="@i" class="btn btn-primary @(i == Model.FoodTypePaging.PageIndex ? "activebtn" : "")">@i</a>
+    }
+    <a asp-page="./Index" asp-route-pageIndex="@(Model.FoodTypePaging.PageIndex + 1)" class="btn btn-primary @nextDisabled">Next</a>
 </div>

@@ -1,7 +1,28 @@
 ﻿@page
 @model WebApp.Pages.Admin.Categories.IndexModel
 
-@* <partial name="_Notification"/> *@
+@{
+    var prevDisabled = !Model.CategoryPaging.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.CategoryPaging.HasNextPage ? "disabled" : "";
+}
+@{
+    int pagesToShow = 2; // Số lượng trang hiển thị
+    int startPage = Model.CategoryPaging.PageIndex - pagesToShow;
+    int endPage = Model.CategoryPaging.PageIndex + pagesToShow;
+
+    if (startPage < 1)
+    {
+        startPage = 1;
+        endPage = Math.Min(Model.CategoryPaging.TotalPages, 2 * pagesToShow + 1);
+    }
+
+    if (endPage > Model.CategoryPaging.TotalPages)
+    {
+        endPage = Model.CategoryPaging.TotalPages;
+        startPage = Math.Max(1, Model.CategoryPaging.TotalPages - 2 * pagesToShow);
+    }
+}
+
 
 <div class="container p-3">
     <div class="row pt-4">
@@ -46,4 +67,11 @@
             }
         </tbody>
     </table>
+    <br /><br />
+    <a asp-page="./Index" asp-route-pageIndex="@(Model.CategoryPaging.PageIndex - 1)" class="btn btn-primary @prevDisabled">Previous</a>
+    @for (int i = startPage; i <= endPage; i++)
+    {
+        <a asp-page="./Index" asp-route-pageIndex="@i" class="btn btn-primary @(i == Model.CategoryPaging.PageIndex ? "activebtn" : "")">@i</a>
+    }
+    <a asp-page="./Index" asp-route-pageIndex="@(Model.CategoryPaging.PageIndex + 1)" class="btn btn-primary @nextDisabled">Next</a>
 </div>

@@ -37,6 +37,7 @@ namespace WebApp.Pages.Customer.Cart
             List<ShoppingCart> shoppingCarts = _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == orderHeader.UserId).ToList();
             _unitOfWork.ShoppingCart.RemoveRange(shoppingCarts);
             _unitOfWork.Save();
+            HttpContext.Session.SetInt32(SD.SessionCart, 0);
             OrderId = id;
         }
     }

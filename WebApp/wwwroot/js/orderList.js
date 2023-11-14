@@ -13,16 +13,20 @@ $(document).ready(function () {
                 loadList("ready");
             }
             else {
-                loadList("inprocess");
+                if (url.includes("inprocess")) {
+                    loadList("inprocess");
+                } else {
+                    loadList("all");
+                }
             }
         }
     }
 });
 
-function loadList(param1) {
+function loadList(param) {
     dataTable = $('#myTable').DataTable({
         "ajax": {
-            "url": "/api/Order?status=" + param1,
+            "url": "/api/Order?status=" + param,
             "type": "GET",
             "datatype": "json"
         },

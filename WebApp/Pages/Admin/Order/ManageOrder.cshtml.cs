@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Collections.Generic;
 using Web.DataAccess.Repository.IRepository;
 using Web.Models;
 using Web.Models.ViewModel;
@@ -45,6 +46,19 @@ namespace WebApp.Pages.Admin.Order
         {
             _unitOfWork.OrderHeader.UpdateStatus(orderId, SD.StatusReady);
             _unitOfWork.Save();
+            var ListMenuItem = _unitOfWork.OrderDetails.GetAll(filter: o => o.OrderId == orderId).Select(m => m.MenuItemId).ToList();
+            foreach (var item in ListMenuItem)
+            {
+                var listIngredient = _unitOfWork.MenuItemIngredient.GetAll(filter: m => m.MenuItemId == item).Select(m => m.IngredientId).ToList();
+                if (listIngredient != null)
+                {
+                    foreach (var itemIngredient in listIngredient)
+                    {
+                        _unitOfWork.Ingredient.UpdateQuatity(itemIngredient);
+                        _unitOfWork.Save();
+                    }
+                }
+            }
             return RedirectToPage("ManageOrder");
         }
         public IActionResult OnPostOrderCancel(int orderId)

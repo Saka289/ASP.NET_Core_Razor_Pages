@@ -1,0 +1,41 @@
+﻿@page
+@model WebApp.Pages.Admin.Ingredient.EditModel
+
+<form method="post">
+    <input hidden asp-for="Ingredient.Id" />
+    <div class="border p-3 mt-4">
+        <div class="row pl-3">
+            <h2 class="text-primary pl-3">Edit Ingredient</h2>
+            <hr />
+        </div>
+        <div asp-validation-summary="All"></div>
+        <div class="mb-3">
+            <label asp-for="Ingredient.Name"></label>
+            <input asp-for="Ingredient.Name" class="form-control" />
+            <span asp-validation-for="Ingredient.Name" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Ingredient.Price"></label>
+            <input asp-for="Ingredient.Price" class="form-control" />
+            <span asp-validation-for="Ingredient.Price" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Ingredient.Quantity"></label>
+            <input asp-for="Ingredient.Quantity" class="form-control" type="number" min="1"/>
+            <span asp-validation-for="Ingredient.Quantity" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Ingredient.ExpirationDate"></label>
+            <input asp-for="Ingredient.ExpirationDate" class="form-control" />
+            <span asp-validation-for="Ingredient.ExpirationDate" class="text-danger"></span>
+        </div>
+        <Button type="submit" class="btn btn-primary" style="width:150px">Update</Button>
+        <a asp-page="Index" class="btn btn-primary">Back to List</a>
+    </div>
+</form>
+
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial"/>
+    }
+}

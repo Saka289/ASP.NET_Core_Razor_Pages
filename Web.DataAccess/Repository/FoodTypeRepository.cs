@@ -22,7 +22,7 @@ namespace Web.DataAccess.Repository
             var queryFromDb = _context.FoodType.FirstOrDefault(f => f.Id == foodType.Id);
             if (queryFromDb != null)
             {
-                foodType.Name = queryFromDb.Name;
+                queryFromDb.Name = foodType.Name;
             }
         }
     }

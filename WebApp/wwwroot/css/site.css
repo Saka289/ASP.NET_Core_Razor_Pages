@@ -58,3 +58,8 @@ body {
     white-space: nowrap;
     line-height: 60px;
 }
+.activebtn {
+    color: #fff;
+    background-color: dimgrey;
+    border-color: #1a1a1a;
+}

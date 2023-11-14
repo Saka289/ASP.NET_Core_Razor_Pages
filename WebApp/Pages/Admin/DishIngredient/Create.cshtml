@@ -1,0 +1,39 @@
+﻿@page
+@model WebApp.Pages.Admin.DishIngredient.CreateModel
+
+<form method="post">
+    <div class="border p-3 mt-4">
+        <div class="row pl-3">
+            <h2 class="text-primary pl-3">Create DishIngredient</h2>
+            <hr />
+        </div>
+        <div asp-validation-summary="All"></div>
+        <div class="mb-3">
+            <label asp-for="MenuItemIngredient.MenuItemId"></label><br /><br />
+            <select class="form-select" asp-for="MenuItemIngredient.MenuItemId" asp-items=" Model.MenuItemList">
+                <option>Select a MenuItem</option>
+            </select>
+            <span asp-validation-for="MenuItemIngredient.MenuItemId" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="MenuItemIngredient.IngredientId"></label><br /><br />
+            @foreach (var item in Model.IngredientList)
+            {
+                <input class="form-check-input" name="ingredientList" type="checkbox" value="@item.Id" id="checkIngredient">
+                <label class="form-check-label" for="checkIngredient">
+                    @item.Name
+                </label>
+                <br /><br />
+            }
+            <span asp-validation-for="MenuItemIngredient.IngredientId" class="text-danger"></span>
+        </div>
+        <Button type="submit" class="btn btn-primary" style="width:150px">Create</Button>
+        <a asp-page="Index" class="btn btn-primary">Back to List</a>
+    </div>
+</form>
+
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}
